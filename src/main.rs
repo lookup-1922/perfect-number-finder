@@ -1,3 +1,8 @@
+use std::io;
+
 fn main() {
-    println!("Hello, world!");
+    let mut input = String::new();
+    io::stdin().read_line(&mut input).ok();
+    let number:i128 = input.trim().parse().ok().unwrap();
+    println!("{}",number);
 }
