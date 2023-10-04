@@ -1,4 +1,5 @@
 use std::io::{self, Read};
+mod is_prime;
 
 fn main() {
     let mut input = String::new();
@@ -25,30 +26,13 @@ fn check_number(number: u128) {
     println!("Pefect Number:{}", is_perfect_number);
 }
 
-fn is_prime(number: u128) -> bool {
-    if number <= 1 {
-        return false;
-    }
-    if number == 2 || number == 3 {
-        return true;
-    }
-    if number % 2 == 0 || number % 3 == 0 {
-        return false;
-    }
+fn Lucas_test() {
 
-    let mut i = 5;
-    while i * i <= number {
-        if number % i == 0 || number % (i + 2) == 0 {
-            return false;
-        }
-        i += 6;
-    }
-
-    return true;
 }
 
 fn is_mersenne_prime_number(number: u128) -> bool {
-    if is_prime(number) {
+    
+    if is_prime::moderator(number) {
         let mersenne_exponent: u32 = (number as f64).log2() as u32;
         let mersenne_number: u128 = 2u128.pow(mersenne_exponent) - 1;
 
@@ -69,7 +53,7 @@ fn is_mersenne_prime_p(p: u128) -> bool {
 
     let mersenne_prime: u128 = 2u128.pow(p as u32) - 1;
 
-    return is_prime(mersenne_prime);
+    return is_prime::moderator(mersenne_prime);
 }
 
 fn is_pefect_number(number: u128) -> bool {
