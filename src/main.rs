@@ -1,5 +1,6 @@
 use std::io::{self, Read};
-mod is_prime;
+mod check;
+use check::is_mersenne::is_mersenne_n as is_mersenne_prime_n;
 
 fn main() {
     let mut input = String::new();
@@ -19,41 +20,11 @@ fn main() {
 
 fn check_number(number: u128) {
     let divisors = listup_divisors(number);
-    let is_mersenne_prime = is_mersenne_prime_number(number);
+    let is_mersenne_prime = is_mersenne_prime_n(number);
     let is_perfect_number = is_pefect_number(number);
     println!("Divisors:{:?}", divisors);
     println!("Mersenne Prime:{}", is_mersenne_prime);
     println!("Pefect Number:{}", is_perfect_number);
-}
-
-fn Lucas_test() {
-
-}
-
-fn is_mersenne_prime_number(number: u128) -> bool {
-    
-    if is_prime::moderator(number) {
-        let mersenne_exponent: u32 = (number as f64).log2() as u32;
-        let mersenne_number: u128 = 2u128.pow(mersenne_exponent) - 1;
-
-        if mersenne_number == number {
-            return true;
-        } else {
-            return false;
-        }
-    } else {
-        return false;
-    }
-}
-
-fn is_mersenne_prime_p(p: u128) -> bool {
-    if p <= 1 {
-        return false;
-    }
-
-    let mersenne_prime: u128 = 2u128.pow(p as u32) - 1;
-
-    return is_prime::moderator(mersenne_prime);
 }
 
 fn is_pefect_number(number: u128) -> bool {
