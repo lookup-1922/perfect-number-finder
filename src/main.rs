@@ -21,6 +21,10 @@ fn main() {
         check_number(number);
         exit_program();
     } else if is_number == false {
+        match input.trim() {
+            "help" => help(),
+            &_ => println!("Unknown error has occured"),
+        }
     }
 }
 
@@ -41,4 +45,7 @@ fn exit_program() {
     println!("Exit the program.");
 }
 
-fn help() {}
+fn help() {
+    println!("help");
+    exit_program();
+}
