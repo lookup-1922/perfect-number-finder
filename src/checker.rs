@@ -1,8 +1,28 @@
 pub mod is_mersenne {
-    pub fn Lucas_test() {}
+    use indicatif::{ProgressBar, ProgressStyle};
+    use num_bigint::BigUint;
+    use num_traits::One;
+    use num_traits::Zero;
+    use std::fs::File;
+    use std::io::Write;
+    use std::time::Instant;
+
+    pub fn lucas_test(n: u64, progress_bar: &ProgressBar) -> bool {
+        let m = BigUint::one() << n;
+        let mut s = BigUint::new(vec![4]);
+        let mut m_minus_one = m.clone();
+        m_minus_one -= BigUint::one();
+
+        for _ in 0..(n - 2) {
+            s = (s.clone() * &s - BigUint::new(vec![2])) % &m;
+            progress_bar.inc(1);
+        }
+
+        s == BigUint::zero()
+    }
 
     pub fn test_by_number(number: u128) -> bool {
-        if is_prime::moderator(number) {
+        if is_prime::simple(number) {
             let mersenne_exponent: u32 = (number as f64).log2() as u32;
             let mersenne_number: u128 = 2u128.pow(mersenne_exponent) - 1;
 
@@ -23,14 +43,10 @@ pub mod is_mersenne {
 
         let mersenne_prime: u128 = 2u128.pow(p as u32) - 1;
 
-        return is_prime::moderator(mersenne_prime);
+        return is_prime::simple(mersenne_prime);
     }
 
     pub mod is_prime {
-        pub fn moderator(number: u128) -> bool {
-            return simple(number);
-        }
-
         pub fn simple(number: u128) -> bool {
             if number <= 1 {
                 return false;
