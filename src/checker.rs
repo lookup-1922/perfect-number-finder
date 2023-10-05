@@ -1,7 +1,7 @@
 pub mod is_mersenne {
     pub fn Lucas_test() {}
 
-    pub fn is_mersenne_n(number: u128) -> bool {
+    pub fn test_by_number(number: u128) -> bool {
         if is_prime::moderator(number) {
             let mersenne_exponent: u32 = (number as f64).log2() as u32;
             let mersenne_number: u128 = 2u128.pow(mersenne_exponent) - 1;
@@ -16,7 +16,7 @@ pub mod is_mersenne {
         }
     }
 
-    pub fn is_mersenne_prime_p(p: u128) -> bool {
+    pub fn test_by_p(p: u128) -> bool {
         if p <= 1 {
             return false;
         }
@@ -55,4 +55,26 @@ pub mod is_mersenne {
     }
 }
 
-pub mod is_perfect_number {}
+pub mod is_perfect_number {
+    pub fn is_pefect_number(number: u128) -> bool {
+        let divisors = listup_divisors(number);
+        let sum_divisors: u128 = divisors.iter().sum();
+        return sum_divisors == number * 2;
+    }
+
+    pub fn listup_divisors(number: u128) -> Vec<u128> {
+        let mut divisors: Vec<u128> = vec![];
+        let mut i = 1;
+        while i * i <= number {
+            if number % i == 0 {
+                divisors.push(i);
+                if i * i != number {
+                    divisors.push(number / i);
+                }
+            }
+            i += 1;
+        }
+        divisors.sort();
+        return divisors;
+    }
+}

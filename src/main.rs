@@ -1,6 +1,8 @@
 use std::io::{self, Read};
-mod check;
-use check::is_mersenne::is_mersenne_n as is_mersenne_prime_n;
+mod checker;
+use checker::is_mersenne::test_by_number as is_mersenne_prime_n;
+use checker::is_perfect_number::is_pefect_number as is_pefect_number;
+use checker::is_perfect_number::listup_divisors as listup_divisors;
 
 fn main() {
     let mut input = String::new();
@@ -25,26 +27,4 @@ fn check_number(number: u128) {
     println!("Divisors:{:?}", divisors);
     println!("Mersenne Prime:{}", is_mersenne_prime);
     println!("Pefect Number:{}", is_perfect_number);
-}
-
-fn is_pefect_number(number: u128) -> bool {
-    let divisors = listup_divisors(number);
-    let sum_divisors: u128 = divisors.iter().sum();
-    return sum_divisors == number * 2;
-}
-
-fn listup_divisors(number: u128) -> Vec<u128> {
-    let mut divisors: Vec<u128> = vec![];
-    let mut i = 1;
-    while i * i <= number {
-        if number % i == 0 {
-            divisors.push(i);
-            if i * i != number {
-                divisors.push(number / i);
-            }
-        }
-        i += 1;
-    }
-    divisors.sort();
-    return divisors;
 }
