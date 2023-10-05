@@ -19,11 +19,9 @@ fn main() {
     if is_number == true {
         let number: u128 = input.trim().parse().ok().unwrap();
         check_number(number);
+        exit_program();
     } else if is_number == false {
-
     }
-    
-    exit_program();
 }
 
 fn check_number(number: u128) {
@@ -35,10 +33,12 @@ fn check_number(number: u128) {
     println!("Pefect Number:{}", is_perfect_number);
 }
 
-fn exit_program (){
+fn exit_program() {
     println!("Press any key to continue...");
     // 標準入力からバイトを読み取る
     let mut buffer = [0; 1];
     let _ = io::stdin().read_exact(&mut buffer); // 1バイト読み取る
     println!("Exit the program.");
 }
+
+fn help() {}
