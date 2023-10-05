@@ -1,23 +1,29 @@
 use std::io::{self, Read};
+
 mod checker;
 use checker::is_mersenne::test_by_number as is_mersenne_prime_n;
-use checker::is_perfect_number::is_pefect_number as is_pefect_number;
-use checker::is_perfect_number::listup_divisors as listup_divisors;
+use checker::is_perfect_number::is_pefect_number;
+use checker::is_perfect_number::listup_divisors;
 
 fn main() {
     let mut input = String::new();
 
-    println!("数値を入力してください");
+    println!("Waiting for you to enter.");
     io::stdin().read_line(&mut input).ok();
-    let number: u128 = input.trim().parse().ok().unwrap();
 
-    check_number(number);
+    let is_number = match input.trim().parse::<u128>() {
+        Ok(_) => true,
+        Err(_) => false,
+    };
 
-    println!("任意のキーを押してください...");
-    // 標準入力からバイトを読み取る
-    let mut buffer = [0; 1];
-    let _ = io::stdin().read_exact(&mut buffer); // 1バイト読み取る
-    println!("プログラムを終了します。");
+    if is_number == true {
+        let number: u128 = input.trim().parse().ok().unwrap();
+        check_number(number);
+    } else if is_number == false {
+
+    }
+    
+    exit_program();
 }
 
 fn check_number(number: u128) {
@@ -27,4 +33,12 @@ fn check_number(number: u128) {
     println!("Divisors:{:?}", divisors);
     println!("Mersenne Prime:{}", is_mersenne_prime);
     println!("Pefect Number:{}", is_perfect_number);
+}
+
+fn exit_program (){
+    println!("Press any key to continue...");
+    // 標準入力からバイトを読み取る
+    let mut buffer = [0; 1];
+    let _ = io::stdin().read_exact(&mut buffer); // 1バイト読み取る
+    println!("Exit the program.");
 }
