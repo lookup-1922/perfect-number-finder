@@ -1,24 +1,17 @@
 pub mod is_mersenne {
-    use indicatif::{ProgressBar, ProgressStyle};
-    use num_bigint::BigUint;
-    use num_traits::One;
-    use num_traits::Zero;
-    use std::fs::File;
-    use std::io::Write;
-    use std::time::Instant;
+    use num_bigint::{BigUint, ToBigUint};
 
-    pub fn lucas_test(n: u64, progress_bar: &ProgressBar) -> bool {
-        let m = BigUint::one() << n;
-        let mut s = BigUint::new(vec![4]);
-        let mut m_minus_one = m.clone();
-        m_minus_one -= BigUint::one();
+pub fn lucas_lehmer_test(p: u32) -> bool {
+        let mut s: BigUint = 4.to_biguint().unwrap();
+        let m: BigUint = 2.to_biguint().unwrap().pow(p) - 1.to_biguint().unwrap();
 
-        for _ in 0..(n - 2) {
-            s = (s.clone() * &s - BigUint::new(vec![2])) % &m;
-            progress_bar.inc(1);
+        for _ in 2..p {
+            s = (s.pow(2)-2.to_biguint().unwrap()) % m.clone();
+            if s == 0.to_biguint().unwrap() {
+                return true;
+            }
         }
-
-        s == BigUint::zero()
+        return false;
     }
 
     pub fn test_by_number(number: u128) -> bool {
@@ -34,16 +27,6 @@ pub mod is_mersenne {
         } else {
             return false;
         }
-    }
-
-    pub fn test_by_p(p: u128) -> bool {
-        if p <= 1 {
-            return false;
-        }
-
-        let mersenne_prime: u128 = 2u128.pow(p as u32) - 1;
-
-        return is_prime::simple(mersenne_prime);
     }
 
     pub mod is_prime {
