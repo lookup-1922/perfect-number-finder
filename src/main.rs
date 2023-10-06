@@ -4,10 +4,10 @@ use std::io::{self, Read};
 //use std::io::Write;
 
 mod checker;
+use checker::is_mersenne::lucas_lehmer_test;
 use checker::is_mersenne::test_by_number as is_mersenne_prime_n;
 use checker::is_perfect_number::is_pefect_number;
 use checker::is_perfect_number::listup_divisors;
-use checker::is_mersenne::lucas_lehmer_test;
 
 fn main() {
     let mut input = String::new();
@@ -27,19 +27,10 @@ fn main() {
     } else if is_number == false {
         match input.trim() {
             "help" => help(),
-            "lucas" => do_lucas_test(),
+            "lucas" => run_lucas_test(),
             &_ => println!("Unknown error has occured"),
         }
     }
-}
-
-fn check_number(number: u128) {
-    let divisors = listup_divisors(number);
-    let is_mersenne_prime = is_mersenne_prime_n(number);
-    let is_perfect_number = is_pefect_number(number);
-    println!("Divisors:{:?}", divisors);
-    println!("Mersenne Prime:{}", is_mersenne_prime);
-    println!("Pefect Number:{}", is_perfect_number);
 }
 
 fn exit_program() {
@@ -55,18 +46,25 @@ fn help() {
     exit_program();
 }
 
-fn do_lucas_test() {
+fn check_number(number: u128) {
+    let divisors = listup_divisors(number);
+    let is_mersenne_prime = is_mersenne_prime_n(number);
+    let is_perfect_number = is_pefect_number(number);
+    println!("Divisors:{:?}", divisors);
+    println!("Mersenne Prime:{}", is_mersenne_prime);
+    println!("Pefect Number:{}", is_perfect_number);
+}
+
+fn run_lucas_test() {
     let mut input = String::new();
     io::stdin().read_line(&mut input).ok();
-    let number: u32 = input.trim().parse().ok().unwrap();
+    let p: u32 = input.trim().parse().ok().unwrap(); // メルセンヌ数の指数
 
-    let n = number; // メルセンヌ数の指数
-
-    let result = lucas_lehmer_test(n);
+    let result = lucas_lehmer_test(p);
     let result_message = if result {
-        format!("2^{} - 1 is a Mersenne prime.", n)
+        format!("2^{} - 1 is a Mersenne prime.", p)
     } else {
-        format!("2^{} - 1 is not a Mersenne prime.", n)
+        format!("2^{} - 1 is not a Mersenne prime.", p)
     };
 
     // 結果をファイルに保存
@@ -74,6 +72,5 @@ fn do_lucas_test() {
     file.write_all(result_message.as_bytes())
         .expect("Failed to write to file");*/
 
-    println!("{}",result_message);
-
+    println!("{}", result_message);
 }

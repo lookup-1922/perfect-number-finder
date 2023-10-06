@@ -1,12 +1,12 @@
 pub mod is_mersenne {
     use num_bigint::{BigUint, ToBigUint};
 
-pub fn lucas_lehmer_test(p: u32) -> bool {
+    pub fn lucas_lehmer_test(p: u32) -> bool {
         let mut s: BigUint = 4.to_biguint().unwrap();
         let m: BigUint = 2.to_biguint().unwrap().pow(p) - 1.to_biguint().unwrap();
 
         for _ in 2..p {
-            s = (s.pow(2)-2.to_biguint().unwrap()) % m.clone();
+            s = (s.pow(2) - 2.to_biguint().unwrap()) % m.clone();
             if s == 0.to_biguint().unwrap() {
                 return true;
             }
