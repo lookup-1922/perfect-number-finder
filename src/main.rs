@@ -73,4 +73,5 @@ fn run_lucas_test() {
         .expect("Failed to write to file");*/
 
     println!("{}", result_message);
+    exit_program();
 }
