@@ -1,10 +1,10 @@
 use num_bigint::{BigUint, ToBigUint};
 
-fn pow(base: BigUint, exponent: BigUint) -> BigUint {
+pub fn fast_pow(base: BigUint, exponent: BigUint) -> BigUint {
     if exponent == 0.to_biguint() {
-        return 1.0;
+        return 1.to_biguint();
     } else {
-        let half_pow = pow(base, exponent / 2);
+        let half_pow = fast_pow(base, exponent / 2);
         if exponent % 2 == 0 {
             return half_pow * half_pow;
         } else {
