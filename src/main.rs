@@ -3,11 +3,13 @@ use std::io::{self, Read};
 //use std::fs::File;
 //use std::io::Write;
 
-mod checker;
-use checker::is_mersenne::lucas_lehmer_test;
-use checker::is_mersenne::test_by_number as is_mersenne_prime_n;
-use checker::is_perfect_number::is_pefect_number;
-use checker::is_perfect_number::listup_divisors;
+mod is_mersenne;
+mod is_perfect_number;
+
+use is_mersenne::lucas_lehmer_test;
+use is_mersenne::test_by_number as is_mersenne_prime_n;
+use is_perfect_number::is_pefect_number;
+use is_perfect_number::listup_divisors;
 
 fn main() {
     let mut input = String::new();
